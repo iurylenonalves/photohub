@@ -7,12 +7,6 @@ interface PrivacyPolicyModalProps {
 }
 
 const PrivacyPolicyModal = ({ onClose }: PrivacyPolicyModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const togglePrivacyPolicy = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <div className={privicyPolicyModalStyles.modal}>
       <section className={privicyPolicyModalStyles.content}>
