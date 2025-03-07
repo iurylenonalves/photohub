@@ -18,7 +18,7 @@ const CategoryFilter = ({ selectedCategory, onSelectCategory }: CategoryFilterPr
       {Object.entries(categories).map(([key, label]) => (
         <button
           key={key}
-          className={`px-4 py-2 font-semibold text-lg ${
+          className={`px-4 py-2 font-semibold text-lg cursor-pointer ${
             selectedCategory === key ? "text-primary" : "text-gray-600"
           }`}
           onClick={() => onSelectCategory(key)}

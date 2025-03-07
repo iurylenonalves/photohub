@@ -20,7 +20,7 @@ const About = () => {
           </div>
           <div className="w-full md:w-1/2 text-left">
             <p className="text-lg text-gray-700 leading-relaxed">
-              Oi! E sou a Bruna, mas você também pode me chamar de Bru (coisa de paulistana, né?!).
+              Oi! Eu sou a Bruna, mas você também pode me chamar de Bru (coisa de paulistana, né?!).
               Londres sempre foi o meu sonho de adolescente, e em 2018 tive a felicidade de realizá-lo. 
               Me mudei para cá com meu marido e minha filha, e foi aqui que nossa família cresceu ainda mais, 
               com a chegada de mais dois filhos.
