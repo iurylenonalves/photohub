@@ -1,4 +1,3 @@
-import { useState } from "react";
 import privicyPolicyModalStyles from "../../styles/privacypolicymodal.module.css"; // Estilos específicos para este modal
 
 
