@@ -1,0 +1,140 @@
+/* modal.module.css */
+
+/* Estilo da barra de rolagem */
+.scrollbarWrapper {
+  max-width: 100%;
+  max-height: 80vh;
+  overflow: auto; /* Adiciona rolagem quando a imagem é maior que o contêiner */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.2); /* Cor da barra e da trilha */
+}
+
+/* Estilo do "track" (trilha) da barra */
+.scrollbarWrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Estilo do "track" da barra */
+.scrollbarWrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2); /* Cor da trilha */
+  border-radius: 10px;
+}
+
+/* Estilo do "thumb" (a parte que você move) */
+.scrollbarWrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); /* Cor do "thumb" */
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+/* Estilo do "thumb" quando o mouse está sobre ele */
+.scrollbarWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.7); /* Cor do "thumb" quando hover */
+}
+
+/* Outros estilos do modal */
+.modalWrapper {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.closeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: white;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 60;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 2rem;
+  background: rgba(128, 128, 128, 0.5);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 60; /* Garante que os botões fiquem sobre a imagem */
+  width: 40px;  /* Ajusta o tamanho fixo para o botão */
+  height: 40px; /* Ajusta o tamanho fixo para o botão */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navButtonLeft {
+  left: 4px;
+}
+
+.navButtonRight {
+  right: 4px;
+}
+
+.imageWrapper {
+  position: relative;
+  max-width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.image {
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* Estilos para o modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modalTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modalBody {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}

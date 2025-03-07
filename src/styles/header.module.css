@@ -1,0 +1,125 @@
+/* Estilos gerais do header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+/* Container do conteúdo do header */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilização da logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+.logoImg {
+  width: 150px;
+  height: auto;
+}
+
+/* Menu para telas grandes */
+.nav {
+  display: flex;
+  gap: 24px; /* Espaço entre os itens */
+}
+
+.nav a {
+  color: black;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: gray;
+}
+
+/* Estilos dos botões */
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white !important; /* Garante que o texto seja branco */
+  transition: background 0.3s ease;
+}
+
+.whatsapp {
+  background-color: #43A047 !important;
+}
+
+.whatsapp:hover {
+  background-color: #388E3C !important;
+}
+
+.instagram {
+  background-color: #db3082 !important;
+}
+
+.instagram:hover {
+  background-color: #9C225d !important;
+}
+
+/* Ícone do menu mobile */
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Menu mobile */
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .nav,
+  .buttonGroup {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+}
+
+@media (max-width: 460px) {
+  .container {
+    padding: 12px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+}
