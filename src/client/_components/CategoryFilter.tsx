@@ -14,12 +14,12 @@ const categories = {
 
 const CategoryFilter = ({ selectedCategory, onSelectCategory }: CategoryFilterProps) => {
   return (
-    <div className="mb-8 flex justify-center space-x-4">
+    <div className="mb-8 flex-wrap justify-center gap-2 md:gap-4" data-aos="fade-up">
       {Object.entries(categories).map(([key, label]) => (
         <button
           key={key}
-          className={`px-4 py-2 font-semibold text-lg cursor-pointer ${
-            selectedCategory === key ? "text-primary" : "text-gray-600"
+          className={`px-3 py-2 font-semibold text-lg cursor-pointer rounded-md transition-all ${
+            selectedCategory === key ? "text-primary" : "text-gray-600" 
           }`}
           onClick={() => onSelectCategory(key)}
         >
