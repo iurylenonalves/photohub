@@ -1,9 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { Menu, X, Instagram, MessageCircle } from 'lucide-react';
+
 import styles from '../../styles/header.module.css';
 
 const Header = () => {
