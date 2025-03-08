@@ -1,14 +1,13 @@
-@import "tailwindcss/preflight"; /* Substitui @tailwind base */
-@tailwind utilities; /* Substitui @tailwind components e utilities */
+@import url('https://fonts.googleapis.com/css2?family=Questrial&family=Raleway:wght@400;700&display=swap');
+
+@import "tailwindcss/preflight";
+@tailwind utilities;
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
-
 @import "tailwindcss";
-
-@import url('https://fonts.googleapis.com/css2?family=Questrial&family=Raleway:wght@400;700&display=swap');
 
 :root {
   --font-questrial: 'Questrial', sans-serif;
