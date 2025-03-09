@@ -19,13 +19,13 @@ const About = () => {
             />
           </div>
           <div className="w-full md:w-1/2 text-left">
-            <p className="text-lg text-gray-700 leading-relaxed">
+            <p className="text-lg text-gray-700 leading-relaxed text-justify">
               Oi! Eu sou a Bruna, mas você também pode me chamar de Bru (coisa de paulistana, né?!).
               Londres sempre foi o meu sonho de adolescente, e em 2018 tive a felicidade de realizá-lo. 
               Me mudei para cá com meu marido e minha filha, e foi aqui que nossa família cresceu ainda mais, 
               com a chegada de mais dois filhos.
             </p>
-            <p className="text-lg text-gray-700 mt-4 leading-relaxed">
+            <p className="text-lg text-gray-700 mt-4 leading-relaxed text-justify">
               Desde então, estive em busca de novas experiências, e foi nessa cidade incrível que encontrei o 
               cenário perfeito para transformar minha paixão em profissão. A fotografia sempre foi meu grande amor, 
               e meu maior desejo é eternizar momentos especiais —assim como minha mãe sempre fez — porque acredito que 
