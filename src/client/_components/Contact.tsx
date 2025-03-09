@@ -5,7 +5,7 @@ const Contact = () => {
   return (
       <section className="py-16 px-6 bg-gray-50 scrool-mt-16" id="contact">
         <div className="max-w-6xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl font-bold text-gray-900">Contato</h2>
+          <h2 className="text-4xl font-bold text-gray-900">Bruna Alves</h2>
           <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-12">
             <div className="w-full md:w-1/2">
               <Image
@@ -19,16 +19,16 @@ const Contact = () => {
               />
             </div>
             <div className="w-full md:w-1/2 text-left">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center md:text-left">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center md:text-center">
                 Entre em Contato
               </h2>              
-              <p className="text-lg text-gray-700 mb-4">
+              <p className="text-lg text-gray-700 mb-4 text-justify">
                 Quer transformar seus momentos em registros inesquecíveis? Seja para sua viagem, sua marca ou um retrato especial, estou aqui para capturar sua essência em cada clique.
               </p>
-              <p className="text-lg text-gray-700 mb-4">
+              <p className="text-lg text-gray-700 mb-4 text-justify">
                 📩 Me mande uma mensagem e vamos conversar sobre o ensaio perfeito para você!
               </p>
-              <p className="text-lg text-gray-700 mb-4">
+              <p className="text-lg text-gray-700 mb-4 text-justify">
                 📸 Vamos eternizar seus momentos juntos?
               </p>
               <div className="mt-8 text-center">
