@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Modal from "./Modal";
 import Pagination from "./Pagination";
@@ -10,7 +10,8 @@ const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 9; // Quantidade de imagens por página
+  const itemsPerPage = 9; // Number of items per page
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   const portfolioImages: Record<string, { base: string }[]> = {
     all: 
@@ -63,21 +64,28 @@ const Portfolio = () => {
 
   const filteredImages = portfolioImages[selectedCategory as keyof typeof portfolioImages];
   
-  // Paginação
+  // Paginations
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedImages = filteredImages.slice(startIndex, startIndex + itemsPerPage);
 
+  // Scroll to top when changing pages
+  useEffect(() => {
+    if (galleryRef.current) {
+      galleryRef.current.scrollIntoView({ behavior: "smooth"})
+    }
+  }, [currentPage]);
+
   return (
-    <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio">
+    <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio" ref={galleryRef}>
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-8" data-aos="fade-up">
           Meu Portfólio
         </h2>
 
-        {/* Filtro de categorias */}
+        {/* Filter Category */}
         <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={handleCategoryChange} />
 
-        {/* Galeria filtrada */}
+        {/* Filtered Galery */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
           {paginatedImages.map(({ base }, index) => (
             <div
@@ -101,7 +109,7 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Paginação */}
+        {/* Pagination */}
         <Pagination
           totalItems={filteredImages.length}
           itemsPerPage={itemsPerPage}
