@@ -5,6 +5,7 @@ import Image from "next/image";
 import Modal from "./Modal";
 import Pagination from "./Pagination";
 import CategoryFilter from "./CategoryFilter";
+import Loader from "./Loader";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -14,6 +15,7 @@ const Portfolio = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hasMounted, setHasMounted] = useState(false);
   const [isScrollingToGallery, setIsScrollingToGallery] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const portfolioImages: Record<string, { base: string }[]> = {
     all: 
@@ -63,6 +65,7 @@ const Portfolio = () => {
     setSelectedCategory(category);
     setCurrentPage(1);
     setIsScrollingToGallery(true);
+    setIsLoading(true)
   };
 
   const filteredImages = portfolioImages[selectedCategory as keyof typeof portfolioImages];
@@ -70,6 +73,13 @@ const Portfolio = () => {
   // Paginations
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedImages = filteredImages.slice(startIndex, startIndex + itemsPerPage);
+
+  // Disable the loader when images are finished loading
+  useEffect(() => {
+    if (hasMounted) {
+      setIsLoading(false)
+    }
+  }, [filteredImages, currentPage])
 
   // Scroll to top when changing pages
   useEffect(() => {
@@ -95,28 +105,33 @@ const Portfolio = () => {
         <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={handleCategoryChange} />
 
         {/* Filtered Galery */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-          {paginatedImages.map(({ base }, index) => (
-            <div
-              key={index}
-              className="group relative overflow-hidden rounded-lg shadow-md cursor-pointer"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              onClick={() => setSelectedIndex(startIndex + index)}
-            >
-              <Image
-                src={`/images/${base}-thumbnail.webp`}
-                alt={`Portfolio image ${index + 1}`}
-                width={500}
-                height={400}
-                className="w-full h-72 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out flex items-center justify-center">
-                <span className="text-white text-lg font-semibold">Ver detalhes</span>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+            {paginatedImages.map(({ base }, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-lg shadow-md cursor-pointer"
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+                onClick={() => setSelectedIndex(startIndex + index)}
+              >
+                <Image
+                  src={`/images/${base}-thumbnail.webp`}
+                  alt={`Portfolio image ${index + 1}`}
+                  width={500}
+                  height={400}
+                  className="w-full h-72 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out flex items-center justify-center">
+                  <span className="text-white text-lg font-semibold">Ver detalhes</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
         <Pagination
