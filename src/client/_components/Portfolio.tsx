@@ -11,7 +11,9 @@ const Portfolio = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 9; // Number of items per page
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [isScrollingToGallery, setIsScrollingToGallery] = useState(false);
 
   const portfolioImages: Record<string, { base: string }[]> = {
     all: 
@@ -60,6 +62,7 @@ const Portfolio = () => {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    setIsScrollingToGallery(true);
   };
 
   const filteredImages = portfolioImages[selectedCategory as keyof typeof portfolioImages];
@@ -70,13 +73,19 @@ const Portfolio = () => {
 
   // Scroll to top when changing pages
   useEffect(() => {
-    if (galleryRef.current) {
-      galleryRef.current.scrollIntoView({ behavior: "smooth"})
+    if (!hasMounted) {
+      setHasMounted(true);
+      return;
     }
-  }, [currentPage]);
+
+    if (sectionRef.current && isScrollingToGallery) {
+      sectionRef.current.scrollIntoView({ behavior: "smooth"})
+      setIsScrollingToGallery(false)
+    }
+  }, [currentPage, isScrollingToGallery, hasMounted]);
 
   return (
-    <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio" ref={galleryRef}>
+    <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio" ref={sectionRef}>
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-8" data-aos="fade-up">
           Meu Portfólio
