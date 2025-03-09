@@ -88,7 +88,7 @@ const Portfolio = () => {
       return;
     }
 
-    if (sectionRef.current && isScrollingToGallery) {
+    if (sectionRef.current && (isScrollingToGallery || currentPage !== 1)) {
       sectionRef.current.scrollIntoView({ behavior: "smooth"})
       setIsScrollingToGallery(false)
     }
