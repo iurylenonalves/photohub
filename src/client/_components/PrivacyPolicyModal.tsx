@@ -50,7 +50,7 @@ const PrivacyPolicyModal = ({ onClose }: PrivacyPolicyModalProps) => {
               <li>Retirar seu consentimento para o uso dos dados.</li>
             </ul>
           <p>Se desejar exercer algum desses direitos, entre em contato pelo e-mail: 
-            <strong>brunaphoto.sfa@gmail.com</strong>.
+            <strong> brunaphoto.sfa@gmail.com</strong>.
           </p>
         <h2>7. Cookies</h2>
           <p>
@@ -64,7 +64,7 @@ const PrivacyPolicyModal = ({ onClose }: PrivacyPolicyModalProps) => {
           </p>
         <h2>9. Contato</h2>
           <p>Se tiver dúvidas sobre esta Política de Privacidade, entre em contato:</p>
-          <p>📧 <strong>E-mail:</strong> brunaphoto.sfa@gmail.com</p>          
+          <p>📧<strong> E-mail:</strong> brunaphoto.sfa@gmail.com</p>          
           <div className={privicyPolicyModalStyles.buttonContainer}>
           <button className={privicyPolicyModalStyles.closeButton} onClick={onClose}>Fechar</button>            
           </div>          
