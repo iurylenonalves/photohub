@@ -4,11 +4,15 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X, Instagram, MessageCircle } from 'lucide-react';
+import { useTranslations } from '@/context/TranslationContext';
+
 
 import styles from '../../styles/header.module.css';
+import ToggleLanguageButton from './ToggleLanguageButton';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { translations } = useTranslations();
 
   return (
     <header className={styles.header}>
@@ -18,14 +22,14 @@ const Header = () => {
         <Image src="/images/logo-brunaalvesphoto-thumbnail.webp" alt="Logo" width={150} height={50} priority/>
         </Link>
 
-        {/* Menu para telas grandes */}
+        {/* Menu for large screens */}
         <nav className={styles.nav}>
-          <Link href="#about" className={styles.navLink}>Sobre</Link>
-          <Link href="#portfolio" className={styles.navLink}>Portfólio</Link>
-          <Link href="#contact" className={styles.navLink}>Contato</Link>
+          <Link href="#about" className={styles.navLink}>{translations.about}</Link>
+          <Link href="#portfolio" className={styles.navLink}>{translations.portfolio}</Link>
+          <Link href="#contact" className={styles.navLink}>{translations.contact}</Link>
         </nav>
 
-        {/* Botões do WhatsApp e Instagram */}
+        {/* Buttons - WhatsApp, Instagram and Language */}
         <div className={styles.buttonGroup}>
           <a
             href="https://wa.me/447542554870?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços"
@@ -46,6 +50,8 @@ const Header = () => {
             <Instagram size={20} />
             Instagram
           </a>
+
+          <ToggleLanguageButton />
         </div>
 
         {/* Menu Mobile */}
@@ -57,9 +63,9 @@ const Header = () => {
       {/* Dropdown Menu Mobile */}
       {isOpen && (
         <nav className={styles.mobileMenu}>
-          <Link href="#about" onClick={() => setIsOpen(false)}>Sobre</Link>
-          <Link href="#portfolio" onClick={() => setIsOpen(false)}>Portfólio</Link>
-          <Link href="#contact" onClick={() => setIsOpen(false)}>Contato</Link>
+          <Link href="#about" onClick={() => setIsOpen(false)}>{translations.about}</Link>
+          <Link href="#portfolio" onClick={() => setIsOpen(false)}>{translations.portfolio}</Link>
+          <Link href="#contact" onClick={() => setIsOpen(false)}>{translations.contact}</Link>
 
           {/* Botões no menu mobile */}
           <a
