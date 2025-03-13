@@ -1,7 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import styles from '../../styles/hero.module.css';
+import { useTranslations } from '@/context/TranslationContext';
 
 const Hero = () => {
+  const { translations } = useTranslations()
+
   return (
     <section
       className={`${styles['hero-bg']} relative w-screen h-screen bg-cover bg-center bg-no-repeat `}
@@ -10,10 +15,10 @@ const Hero = () => {
       <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-6">
       <div className="space-y-4" data-aos="fade-up">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight sm:leading-snug md:leading-normal lg:leading-relaxed">
-        Registros que contam sua história
+          {translations.heroTitle}
         </h1>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl">
-        Fotografia para viagens, negócios e momentos inesquecíveis.
+          {translations.heroSubtitle}
         </p>
         <Link 
           href={`https://wa.me/447542554870?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços`} 
@@ -21,7 +26,7 @@ const Hero = () => {
           target='_blank'
           rel='noopener noreferrer'
         >
-        Entre em contato
+          {translations.contactButton}
         </Link>
       </div>
       </div>
