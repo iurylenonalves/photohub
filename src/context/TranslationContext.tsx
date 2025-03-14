@@ -21,19 +21,23 @@ const TranslationContext = createContext<TranslationContextType | undefined>(und
 
 // Add the type to the props component
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({ children }) => {
-  const [locale, setLocale] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("locale") || "en"
-    }
-    return "en"
-  })
+  const [locale, setLocaleState] = useState<string>("en");
 
-  const [translations, setTranslations] = useState<Translations>(locale === "pt" ? pt : en)
+  const [translations, setTranslations] = useState<Translations>(en)
 
   useEffect(() => {
-    localStorage.setItem("locale", locale)
-    setTranslations(locale === "pt" ? pt : en)
-  }, [locale]);
+    const savedLocale = localStorage.getItem("locale") || "en";
+    setLocaleState(savedLocale);
+    setTranslations(savedLocale === "pt" ? pt : en);
+  }, []);
+
+  const setLocale = (newLocale: string) => {
+    setLocaleState(newLocale);
+    setTranslations(newLocale === "pt" ? pt : en);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("locale", newLocale);
+    }
+  };
 
   return (
     <TranslationContext.Provider value={{ translations, locale, setLocale }}>
