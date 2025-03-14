@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import Pagination from "./Pagination";
 import CategoryFilter from "./CategoryFilter";
 import Loader from "./Loader";
+import { useTranslations } from "@/context/TranslationContext";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -94,11 +95,13 @@ const Portfolio = () => {
     }
   }, [currentPage, isScrollingToGallery, hasMounted]);
 
+  const { translations } = useTranslations();
+
   return (
     <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio" ref={sectionRef}>
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-8" data-aos="fade-up">
-          Meu Portfólio
+          {translations.portfolioTitle}
         </h2>
 
         {/* Filter Category */}
@@ -126,7 +129,7 @@ const Portfolio = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out flex items-center justify-center">
-                  <span className="text-white text-lg font-semibold">Ver detalhes</span>
+                  <span className="text-white text-lg font-semibold">{translations.portfolioImagesDetails}</span>
                 </div>
               </div>
             ))}
