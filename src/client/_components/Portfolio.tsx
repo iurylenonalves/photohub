@@ -8,6 +8,12 @@ import CategoryFilter from "./CategoryFilter";
 import Loader from "./Loader";
 import { useTranslations } from "@/context/TranslationContext";
 
+interface ImageItem {
+  base: string;
+}
+
+type PortfolioImages = Record<string, ImageItem[]>;
+
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -18,7 +24,9 @@ const Portfolio = () => {
   const [isScrollingToGallery, setIsScrollingToGallery] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
 
-  const portfolioImages: Record<string, { base: string }[]> = {
+  const { translations } = useTranslations();
+
+  const portfolioImages: PortfolioImages = {
     all: 
     [
       { base: "tour01" }, { base: "tour02" }, { base: "tour03" }, 
@@ -80,7 +88,7 @@ const Portfolio = () => {
     if (hasMounted) {
       setIsLoading(false)
     }
-  }, [filteredImages, currentPage])
+  }, [filteredImages, currentPage, hasMounted])
 
   // Scroll to top when changing pages
   useEffect(() => {
@@ -93,9 +101,8 @@ const Portfolio = () => {
       sectionRef.current.scrollIntoView({ behavior: "smooth"})
       setIsScrollingToGallery(false)
     }
-  }, [currentPage, isScrollingToGallery, hasMounted, sectionRef.current]);
+  }, [currentPage, isScrollingToGallery, hasMounted]);
 
-  const { translations } = useTranslations();
 
   return (
     <section className="py-16 px-6 bg-white scroll-mt-16" id="portfolio" ref={sectionRef}>
@@ -105,7 +112,10 @@ const Portfolio = () => {
         </h2>
 
         {/* Filter Category */}
-        <CategoryFilter selectedCategory={selectedCategory} onSelectCategory={handleCategoryChange} />
+        <CategoryFilter 
+          selectedCategory={selectedCategory} 
+          onSelectCategory={handleCategoryChange} 
+        />
 
         {/* Filtered Galery */}
         {isLoading ? (
