@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "@/context/TranslationContext";
+
 interface PaginationProps {
   totalItems: number;
   itemsPerPage: number;
@@ -8,6 +10,8 @@ interface PaginationProps {
 }
 
 const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: PaginationProps) => {
+  const { translations } = useTranslations();
+  
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   if (totalPages <= 1) return null;
 
@@ -23,7 +27,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
             : "bg-gray-300 text-gray-800 hover:bg-gray-400"
         }`}
       >
-        ← Anterior
+        ← {translations.paginationPrevious || "Anterior"}
       </button>
 
       {/* Renderiza os números de página - ocultando em telas pequenas */}
@@ -56,7 +60,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
             : "bg-gray-300 text-gray-800 hover:bg-gray-400"
         }`}
       >
-        Próximo →
+        {translations.paginationNext || "Próximo"} →
       </button>
     </div>
   );
