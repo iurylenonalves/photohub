@@ -6,8 +6,11 @@ import Link from "next/link";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 
 import footerStyles from "../../styles/footer.module.css";
+import { useTranslations } from "@/context/TranslationContext";
+
 
 const Footer = () => {
+  const { translations } = useTranslations();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -23,13 +26,13 @@ const Footer = () => {
       <div className={footerStyles.container}>       
         <div className={footerStyles.links}>
           <Link href="#about" className={footerStyles.link}>
-            Sobre
+            {translations.footerAbout}
           </Link>
           <Link href="#contact" className={footerStyles.link}>
-            Contato
+            {translations.footerContact}
           </Link>
           <button onClick={handleOpenModal} className={footerStyles.link}>
-            Política de Privacidade
+            {translations.footerPrivacyPolicy}
           </button>
           <a
             href="https://www.instagram.com/brunaalvesphoto/"
@@ -39,7 +42,7 @@ const Footer = () => {
           >
             Instagram
           </a>
-          <p className={footerStyles.text}>© 2025 Bruna Alves. Todos os direitos reservados.</p>
+          <p className={footerStyles.text}>&copy; {translations.footerRights}</p>
         </div>
       </div>
 
