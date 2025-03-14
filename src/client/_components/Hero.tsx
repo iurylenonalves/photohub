@@ -21,7 +21,7 @@ const Hero = () => {
           {translations.heroSubtitle}
         </p>
         <Link 
-          href={`https://wa.me/447542554870?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços`} 
+          href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`} 
           className="inline-block mt-6 px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark opacity-60 transition"
           target='_blank'
           rel='noopener noreferrer'
