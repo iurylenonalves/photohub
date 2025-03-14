@@ -32,13 +32,13 @@ const Header = () => {
         {/* Buttons - WhatsApp, Instagram and Language */}
         <div className={styles.buttonGroup}>
           <a
-            href="https://wa.me/447542554870?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços"
+            href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.button} ${styles.whatsapp}`}
           >
             <MessageCircle size={20} />
-            WhatsApp
+            {/* WhatsApp */}
           </a>
 
           <a
@@ -48,16 +48,24 @@ const Header = () => {
             className={`${styles.button} ${styles.instagram}`}
           >
             <Instagram size={20} />
-            Instagram
+            {/* Instagram */}
           </a>
 
           <ToggleLanguageButton />
         </div>
 
-        {/* Menu Mobile */}
-        <button className={styles.menuButton} onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Controls */}
+        <div className={styles.mobileControls}>
+          {/* Language Toggle for Mobile */}
+          <div className={styles.mobileLanguage}>
+            <ToggleLanguageButton />
+          </div>
+          
+          {/* Menu Button Mobile */}
+          <button className={styles.menuButton} onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Dropdown Menu Mobile */}
@@ -67,9 +75,9 @@ const Header = () => {
           <Link href="#portfolio" onClick={() => setIsOpen(false)}>{translations.portfolio}</Link>
           <Link href="#contact" onClick={() => setIsOpen(false)}>{translations.contact}</Link>
 
-          {/* Botões no menu mobile */}
+          {/* Menu Button Mobile */}
           <a
-            href="https://wa.me/447542554870?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços"
+            href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.button} ${styles.whatsapp}`}
