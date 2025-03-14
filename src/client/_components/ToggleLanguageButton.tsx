@@ -2,13 +2,32 @@
 
 import { useTranslations } from "@/context/TranslationContext";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const ToggleLanguageButton = () => {
   const { locale, setLocale } = useTranslations();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    }
+
+    checkIfMobile()
+    window.addEventListener('resize', checkIfMobile)
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile)
+    }
+  }, [])
 
   const toggleLanguage = () => {
     setLocale(locale === "en" ? "pt" : "en");
   };
+
+  const flagToShow = locale === "en" ? "pt" : "en";
+  const flagAlt = locale === "en" ? "Brazilian Flag" : "English Flag";
+  const languageText = locale === "en" ? "Português" : "English";
 
   return (
     <div className="flag-container">
@@ -17,22 +36,22 @@ const ToggleLanguageButton = () => {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "8px",
+        gap: isMobile ? "4px" : "8px",
         border: "none",
         background: "none",
         cursor: "pointer",
-        fontSize: "1rem",
+        fontSize: isMobile ? "0.8rem" : "1rem",
       }}
     >
       <Image 
         className="flag-icon"
-        src={`/images/${locale === "pt" ? "pt" : "en"}.svg`} 
-        alt={locale === "en" ? "English Flag" : "Brazilian Flag"} 
-        width={56} 
-        height={40}
+        src={`/images/${flagToShow}.svg`} 
+        alt={flagAlt} 
+        width={isMobile ? 36 : 56} 
+        height={isMobile ? 26 : 40}
         style={{ objectFit: "contain" }}
       />
-      {locale === "en" ? "English" : "Português"}
+      {!isMobile && languageText}
     </button>
     </div>
   );
