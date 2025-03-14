@@ -93,7 +93,7 @@ const Portfolio = () => {
       sectionRef.current.scrollIntoView({ behavior: "smooth"})
       setIsScrollingToGallery(false)
     }
-  }, [currentPage, isScrollingToGallery, hasMounted]);
+  }, [currentPage, isScrollingToGallery, hasMounted, sectionRef.current]);
 
   const { translations } = useTranslations();
 
