@@ -16,7 +16,14 @@ const PrivacyPolicyModal = ({ onClose }: PrivacyPolicyModalProps) => {
       <section className={privicyPolicyModalStyles.content}>
       <h1>{translations.privacyPolicyTitle}</h1>
         <h2>{translations.section1Title}</h2>
-        <p>{translations.section1Content1}</p>
+        <p>
+          {translations.section1Content1}<strong>Bruna Alves</strong>
+          {translations.section1Content2}
+          <strong>{translations.section1Content3}</strong>
+          {translations.section1Content4}
+          <strong>{translations.section1Content5}</strong>
+          {translations.section1Content6}
+        </p>
         
         <h2>{translations.section2Title}</h2>
         <p>{translations.section2Content}</p>
