@@ -33,9 +33,9 @@ const Contact = () => {
               <p className="text-lg text-gray-700 mb-4 text-justify">
                 📩 {translations.contactText2}
               </p>
-              <p className="text-lg text-gray-700 mb-4 text-justify">
+              {/* <p className="text-lg text-gray-700 mb-4 text-justify">
                 📸 {translations.contactText3}
-              </p>
+              </p> */}
               <div className="mt-8 text-center">
                 <a
                   href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`}
