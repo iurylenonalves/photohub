@@ -42,8 +42,8 @@ const Footer = () => {
           >
             Instagram
           </a>
-          <p className={footerStyles.text}>&copy; {translations.footerRights}</p>
         </div>
+        <p className={footerStyles.text}>&copy; {translations.footerRights}</p>
       </div>
 
       {isModalOpen && <PrivacyPolicyModal onClose={handleCloseModal} />}
