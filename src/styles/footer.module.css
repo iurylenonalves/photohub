@@ -15,6 +15,7 @@
 
 .text {
   font-size: 0.875rem;
+  margin-top: 1rem;
 }
 
 .links {
@@ -45,6 +46,7 @@
 
   .text {
     font-size: 0.75rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
   }
 
