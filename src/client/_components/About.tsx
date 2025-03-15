@@ -20,7 +20,7 @@ const About = () => {
               width={600}
               height={400}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
-              priority
+              loading="lazy"
             />
           </div>
           <div className="w-full md:w-1/2 text-left">
