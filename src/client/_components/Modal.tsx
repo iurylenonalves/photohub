@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
 import styles from "../../styles/modal.module.css";
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { useTranslations } from "@/context/TranslationContext";
 
 // Modal props
@@ -24,13 +24,13 @@ const Modal = ({ images, selectedIndex, onClose }: ModalProps) => {
   }, [selectedIndex]);
 
   // Handle the previous and next button
-  const handlePrev = () => {
+  const handlePrev = useCallback (() => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
-  };
+  }, [images]);
 
-  const handleNext = () => {
+  const handleNext = useCallback (() => {
     setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-  };
+  }, [images]);
 
   // Navigate with the arrow keys
   useEffect(() => {
