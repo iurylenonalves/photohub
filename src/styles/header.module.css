@@ -1,3 +1,4 @@
+/* General Styles */
 .header {
   position: fixed;
   top: 0;
@@ -8,7 +9,6 @@
   z-index: 50;
 }
 
-/* Container do conteúdo do header */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -18,7 +18,7 @@
   align-items: center;
 }
 
-/* Estilização da logo */
+/* Logo styles */
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
@@ -31,10 +31,10 @@
   height: auto;
 }
 
-/* Menu para telas grandes */
+/* Menu */
 .nav {
   display: flex;
-  gap: 24px; /* Espaço entre os itens */
+  gap: 24px;
 }
 
 .nav a {
@@ -48,7 +48,7 @@
   color: gray;
 }
 
-/* Estilos dos botões */
+/* Buttons */
 .buttonGroup {
   display: flex;
   gap: 12px;
@@ -62,27 +62,27 @@
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  color: white !important; /* Garante que o texto seja branco */
+  color: white;
   transition: background 0.3s ease;
 }
 
 .whatsapp {
-  background-color: #43A047 !important;
+  background-color: #43A047;
 }
 
 .whatsapp:hover {
-  background-color: #388E3C !important;
+  background-color: #388E3C;
 }
 
 .instagram {
-  background-color: #db3082 !important;
+  background-color: #db3082;
 }
 
 .instagram:hover {
-  background-color: #9C225d !important;
+  background-color: #9C225d;
 }
 
-/* Ícone do menu mobile */
+/* Menu Mobile */
 .menuButton {
   display: none;
   background: none;
@@ -116,7 +116,7 @@
   color: #0070f3;
 }
 
-/* Controles mobile */
+/* Mobile controls */
 .mobileControls {
   display: none;
   align-items: center;
@@ -127,7 +127,7 @@
   margin-right: 8px;
 }
 
-/* Responsividade */
+/* Responsiveness */
 @media (max-width: 768px) {
   .nav,
   .buttonGroup {
@@ -153,7 +153,6 @@
   }
 
   .mobileLanguage {
-    /* Ajuste para telas muito pequenas */
     transform: scale(0.85);
     margin-right: 4px;
   }

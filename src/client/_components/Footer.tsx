@@ -1,11 +1,12 @@
 "use client";
 
+import footerStyles from "../../styles/footer.module.css";
+
 import { useState } from "react";
 import Link from "next/link";
 
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 
-import footerStyles from "../../styles/footer.module.css";
 import { useTranslations } from "@/context/TranslationContext";
 
 

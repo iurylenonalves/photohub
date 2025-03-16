@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from "@/context/TranslationContext";
 import privicyPolicyModalStyles from "../../styles/privacypolicymodal.module.css"; // Estilos específicos para este modal
+import { useTranslations } from "@/context/TranslationContext";
 
 
 interface PrivacyPolicyModalProps {

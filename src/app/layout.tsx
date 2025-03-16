@@ -1,17 +1,20 @@
-import type { Metadata } from "next";
+import "./globals.css";
 import { Questrial, Raleway } from "next/font/google";
+import type { Metadata } from "next";
 import { AosInit } from "@/client/_components/aos-init";
 import { TranslationProvider } from "@/context/TranslationContext";
-import "./globals.css";
+
 
 const questrial = Questrial({
   weight: ["400"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 const raleway = Raleway({
   weight: ["400", "700"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
