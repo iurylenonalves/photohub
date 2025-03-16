@@ -1,17 +1,35 @@
 "use client"
 
 import { useEffect } from "react"
-import Aos from 'aos'
-import 'aos/dist/aos.css'
+
 
 export function AosInit() {
+  useEffect(() => {
+    // load AOS on client side
+    const loadAos = async () => {
+      const AOS = (await import('aos')).default;      
+      
+      if (!document.getElementById('aos-stylesheet')) {
+        const link = document.createElement('link');
+        link.id = 'aos-stylesheet';
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/aos@next/dist/aos.css';
+        document.head.appendChild(link);
+      }
+      
+      AOS.init({
+        once: true,
+        duration: 800,
+      });
+    };
+    
+    if (document.readyState === 'complete') {
+      loadAos();
+    } else {
+      window.addEventListener('load', loadAos);
+      return () => window.removeEventListener('load', loadAos);
+    }
+  }, []);
 
-  useEffect ( () => {
-    Aos.init({     
-      duration: 800,
-      once: true,
-    })
-  }, [])
-
-  return null
+  return null;
 }
