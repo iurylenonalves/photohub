@@ -41,7 +41,7 @@ const Contact = () => {
                   href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-white bg-green-600 text-lg font-semibold rounded-md shadow-md hover:bg-green-700 transition"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-white bg-green-700 text-lg font-semibold rounded-md shadow-md hover:bg-green-800 transition"
                 >
                   <MessageCircle size={20} />
                   {translations.whatsappButton}
