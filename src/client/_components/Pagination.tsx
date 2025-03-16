@@ -15,17 +15,21 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   if (totalPages <= 1) return null;
 
+  const getButtonClasses = (isActive: boolean, isDisabled: boolean) => {
+    if (isDisabled) return "px-4 py-2 rounded bg-gray-200 text-gray-400 cursor-not-allowed";
+    return isActive
+      ? "px-4 py-2 rounded bg-gray-400 text-white shadow-md"
+      : "px-4 py-2 rounded bg-gray-300 text-gray-800 hover:bg-gray-400";
+  };
+
   return (
     <div className="flex justify-center mt-8 space-x-2">
       {/* Botão "Anterior" */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 rounded transition text-sm md:text-base ${
-          currentPage === 1
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-            : "bg-gray-300 text-gray-800 hover:bg-gray-400"
-        }`}
+        className={getButtonClasses(false, currentPage === 1)}
+        aria-label={translations.paginatonAriaLabel}
       >
         ← {translations.paginationPrevious || "Anterior"}
       </button>
@@ -38,11 +42,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
             <button
               key={pageNumber}
               onClick={() => onPageChange(pageNumber)}
-              className={`px-4 py-2 rounded font-semibold transition text-sm md:text-base ${
-                currentPage === pageNumber
-                  ? "bg-gray-400 text-white shadow-md"
-                  : "bg-gray-300 text-gray-800 hover:bg-gray-400"
-              }`}
+              className={getButtonClasses(currentPage === pageNumber, false)}
             >
               {pageNumber}
             </button>
@@ -54,11 +54,8 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 rounded transition text-sm md:text-base ${
-          currentPage === totalPages
-            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-            : "bg-gray-300 text-gray-800 hover:bg-gray-400"
-        }`}
+        className={getButtonClasses(false, currentPage === totalPages)}
+        aria-label={translations.paginationAriaLabe2}
       >
         {translations.paginationNext || "Próximo"} →
       </button>
