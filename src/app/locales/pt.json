@@ -1,4 +1,6 @@
 {
+  "openMenu": "Abrir menu",
+  "closeMenu": "Fechar menu",
   "about": "Sobre",
   "portfolio": "Portfólio",
   "contact": "Contato",
@@ -10,7 +12,7 @@
   "contactButton": "Entre em contato",
 
 
-   "aboutTitle": "Bruna Alves",
+  "aboutTitle": "Bruna Alves",
   "aboutText1": "Oi! Eu sou a Bruna, mas você também pode me chamar de Bru (coisa de paulistana, né?!). Londres sempre foi o meu sonho de adolescente, e em 2018 tive a felicidade de realizá-lo. Me mudei para cá com meu marido e minha filha, e foi aqui que nossa família cresceu ainda mais, com a chegada de mais dois filhos.",
   "aboutText2": "Desde então, estive em busca de novas experiências, e foi nessa cidade incrível que encontrei o cenário perfeito para transformar minha paixão em profissão. A fotografia sempre foi meu grande amor, e meu maior desejo é eternizar momentos especiais — assim como minha mãe sempre fez — porque acredito que todos merecem guardar lembranças inesquecíveis!",
   "whatsappButton": "Fale comigo no WhatsApp",
@@ -25,9 +27,15 @@
   "categoryProfessional": "Profissional",
   "categoryStudio": "Estúdio",
 
+  "modalArialLabelClose": "Fechar",
+  "modalArialLabelPrevious": "Imagem Anterior",
+  "modalArialLabelNext": "Próxima Imagem",
+
 
   "paginationPrevious": "Anterior",
   "paginationNext": "Próximo",
+  "paginatonAriaLabel": "Página Anterior",
+  "paginationAriaLabe2": "Próxima Página",
 
   
   "contactTitle": "Bruna Alves",

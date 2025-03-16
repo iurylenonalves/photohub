@@ -1,4 +1,6 @@
 {
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
   "about": "About",
   "portfolio": "Portfolio",
   "contact": "Contact",
@@ -24,9 +26,15 @@
   "categoryProfessional": "Professional",
   "categoryStudio": "Studio",
 
+  "modalArialLabelClose": "Close",
+  "modalArialLabelPrevious": "Previous Image",
+  "modalArialLabelNext": "Next Image",
+
 
   "paginationPrevious": "Previous",
   "paginationNext": "Next",
+  "paginatonAriaLabel": "Previousp Page",
+  "paginationAriaLabe2": "Next Page",
 
 
   "contactTitle": "Bruna Alves",
