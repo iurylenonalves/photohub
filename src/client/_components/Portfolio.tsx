@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Modal from "./Modal";
 import Pagination from "./Pagination";
@@ -81,7 +81,9 @@ const Portfolio = () => {
   
   // Paginations
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedImages = filteredImages.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedImages = useMemo(() => {
+    return filteredImages.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredImages, currentPage, itemsPerPage]);
 
   // Disable the loader when images are finished loading
   useEffect(() => {
