@@ -1,13 +1,13 @@
 'use client';
 
+import styles from '../../styles/header.module.css';
+
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X, Instagram, MessageCircle } from 'lucide-react';
 import { useTranslations } from '@/context/TranslationContext';
 
-
-import styles from '../../styles/header.module.css';
 import ToggleLanguageButton from './ToggleLanguageButton';
 
 const Header = () => {
@@ -24,7 +24,7 @@ const Header = () => {
           alt="Logo" 
           width={150} 
           height={50} 
-          priority
+          priority={true}
         />
         </Link>
 
