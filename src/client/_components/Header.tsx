@@ -19,7 +19,13 @@ const Header = () => {
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>
-        <Image src="/images/logo-brunaalvesphoto-thumbnail.webp" alt="Logo" width={150} height={50} priority/>
+        <Image 
+          src="/images/logo-brunaalvesphoto-thumbnail.webp" 
+          alt="Logo" 
+          width={150} 
+          height={50} 
+          priority
+        />
         </Link>
 
         {/* Menu for large screens */}
@@ -62,7 +68,11 @@ const Header = () => {
           </div>
           
           {/* Menu Button Mobile */}
-          <button className={styles.menuButton} onClick={() => setIsOpen(!isOpen)}>
+          <button 
+            className={styles.menuButton} 
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? translations.closeMenu : translations.openMenu}
+          >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
