@@ -83,7 +83,7 @@ const Portfolio = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedImages = useMemo(() => {
     return filteredImages.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredImages, currentPage, itemsPerPage]);
+  }, [startIndex, filteredImages, itemsPerPage]);
 
   // Disable the loader when images are finished loading
   useEffect(() => {
