@@ -33,6 +33,7 @@ const ToggleLanguageButton = () => {
     <div className="flag-container">
       <button 
       onClick={toggleLanguage} 
+      aria-label={`Switch language to ${languageText}`}
       style={{
         display: "flex",
         alignItems: "center",
@@ -49,6 +50,7 @@ const ToggleLanguageButton = () => {
         alt={flagAlt} 
         width={isMobile ? 36 : 56} 
         height={isMobile ? 26 : 40}
+        priority={true}
         style={{ objectFit: "contain" }}
       />
       {!isMobile && languageText}
