@@ -15,7 +15,7 @@ const Contact = () => {
             <div className="w-full md:w-1/2">
               <Image
                 src="/images/contact-image-large.webp"
-                alt="Fotógrafa"
+                alt={translations.contactTitle}
                 className="rounded-lg shadow-lg object-contain w-full"
                 width={600}
                 height={400}
@@ -42,6 +42,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 text-white bg-green-700 text-lg font-semibold rounded-md shadow-md hover:bg-green-800 transition"
+                  aria-label={translations.whatsappButton}
                 >
                   <MessageCircle size={20} />
                   {translations.whatsappButton}
