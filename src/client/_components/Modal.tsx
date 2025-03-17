@@ -67,7 +67,7 @@ const Modal = ({ images, selectedIndex, onClose }: ModalProps) => {
         ◀
       </button>
 
-      <div className={`${styles.imageWrapper} ${styles.scrollbarWrapper}`}>
+      <div className={`${styles.imageWrapper}`}>
         <Image
           src={images[currentIndex]}
           alt={`Imagem ${currentIndex + 1}`}
