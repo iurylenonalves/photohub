@@ -1,5 +1,5 @@
-import "./globals.css";
 import { Questrial, Raleway } from "next/font/google";
+import "./globals.css";
 import type { Metadata } from "next";
 import { AosInit } from "@/client/_components/aos-init";
 import { TranslationProvider } from "@/context/TranslationContext";
@@ -9,12 +9,14 @@ const questrial = Questrial({
   weight: ["400"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-questrial",
 });
 
 const raleway = Raleway({
   weight: ["400", "700"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-raleway",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${questrial.className} ${raleway.className} antialiased`}
+        className={`${questrial.variable} ${raleway.variable} antialiased`}
       >
         <TranslationProvider>
           {children}
