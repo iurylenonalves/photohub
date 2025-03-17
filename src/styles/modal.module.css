@@ -1,34 +1,3 @@
-.scrollbarWrapper {
-  max-width: 100%;
-  max-height: 80vh;
-  overflow: auto; 
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.2); 
-}
-
-
-.scrollbarWrapper::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-
-.scrollbarWrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2); 
-  border-radius: 10px;
-}
-
-
-.scrollbarWrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
-  border-radius: 10px;
-  transition: background-color 0.3s;
-}
-
-.scrollbarWrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.7);
-}
-
 .modalWrapper {
   position: fixed;
   inset: 0;
@@ -57,7 +26,7 @@
   transform: translateY(-50%);
   color: white;
   font-size: 2rem;
-  background: rgba(128, 128, 128, 0.5);
+  /* background: rgba(128, 128, 128, 0.5); */
   padding: 8px;
   border-radius: 50%;
   cursor: pointer;
@@ -70,24 +39,28 @@
 }
 
 .navButtonLeft {
-  left: 4px;
+  left: 10px;
 }
 
 .navButtonRight {
-  right: 4px;
+  right: 10px;
 }
 
 .imageWrapper {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 100%;
   max-height: 80vh;
-  overflow: auto;
+  overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
 
-.image {
-  border-radius: 10px;
-  object-fit: contain;
+.imageWrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 
