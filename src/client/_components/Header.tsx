@@ -2,17 +2,22 @@
 
 import styles from '../../styles/header.module.css';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X, Instagram, MessageCircle } from 'lucide-react';
 import { useTranslations } from '@/context/TranslationContext';
 
 import ToggleLanguageButton from './ToggleLanguageButton';
+import MobileMenu from './MobileMenu';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { translations } = useTranslations();
+
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -70,7 +75,7 @@ const Header = () => {
           {/* Menu Button Mobile */}
           <button 
             className={styles.menuButton} 
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleMenu}
             aria-label={isOpen ? translations.closeMenu : translations.openMenu}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -80,32 +85,7 @@ const Header = () => {
 
       {/* Dropdown Menu Mobile */}
       {isOpen && (
-        <nav className={styles.mobileMenu}>
-          <Link href="#about" onClick={() => setIsOpen(false)}>{translations.about}</Link>
-          <Link href="#portfolio" onClick={() => setIsOpen(false)}>{translations.portfolio}</Link>
-          <Link href="#contact" onClick={() => setIsOpen(false)}>{translations.contact}</Link>
-
-          {/* Menu Button Mobile */}
-          <a
-            href={`https://wa.me/447542554870?text=${encodeURIComponent(translations.whatsappMessage)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.button} ${styles.whatsapp}`}
-          >
-            <MessageCircle size={20} />
-            WhatsApp
-          </a>
-
-          <a
-            href="https://www.instagram.com/brunaalvesphoto/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.button} ${styles.instagram}`}
-          >
-            <Instagram size={20} />
-            Instagram
-          </a>
-        </nav>
+        <MobileMenu translations={translations} setIsOpen={setIsOpen} />
       )}
     </header>
   );
