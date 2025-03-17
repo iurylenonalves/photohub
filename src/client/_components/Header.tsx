@@ -23,12 +23,12 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         {/* Logo */}
-        <Link href="/" className={styles.logo}>
+        <Link href="/" className={styles.logoImg}>
         <Image 
           src="/images/logo-brunaalvesphoto-thumbnail.webp" 
           alt="Logo" 
           width={150} 
-          height={50} 
+          height={75} 
           priority={true}
         />
         </Link>
@@ -47,6 +47,7 @@ const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.button} ${styles.whatsapp}`}
+            aria-label='WhatsApp'
           >
             <MessageCircle size={20} />
             {/* WhatsApp */}
@@ -57,6 +58,7 @@ const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={`${styles.button} ${styles.instagram}`}
+            aria-label='Instagram'
           >
             <Instagram size={20} />
             {/* Instagram */}
