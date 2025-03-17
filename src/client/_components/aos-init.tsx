@@ -13,7 +13,7 @@ export function AosInit() {
         const link = document.createElement('link');
         link.id = 'aos-stylesheet';
         link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/aos@next/dist/aos.css';
+        link.href = 'https://unpkg.com/aos@2.3.4/dist/aos.css';
         document.head.appendChild(link);
       }
       
