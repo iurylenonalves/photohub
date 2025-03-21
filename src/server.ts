@@ -11,7 +11,7 @@ const app = express()
 
 app.use(cors({ 
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://seu-site.vercel.app'] 
+    ? [process.env.FRONTEND_URL || 'https://photohub-landingpage-brunaalves.vercel.app/'] 
     : 'http://localhost:3000'
 }))
 app.use(express.json())
