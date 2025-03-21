@@ -49,7 +49,8 @@ const Contact = () => {
     setStatus('loading');
 
     try {
-      const response = await fetch('http://localhost:3001/api/contacts', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
+      const response = await fetch(`${apiUrl}/contacts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
