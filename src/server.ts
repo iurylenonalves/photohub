@@ -9,7 +9,12 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:3000' }))
+app.use(cors({ 
+  origin: [
+    'http://localhost:3000',
+    'https://photohub-landingpage-brunaal-git-39a432-iurylenonalves-projects.vercel.app/'
+  ] 
+}))
 app.use(express.json())
 app.use("/api", router)
 app.use(errorHandlerMiddleware)
