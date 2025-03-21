@@ -10,10 +10,9 @@ dotenv.config()
 const app = express()
 
 app.use(cors({ 
-  origin: [
-    'http://localhost:3000',
-    'https://photohub-landingpage-brunaal-git-39a432-iurylenonalves-projects.vercel.app/'
-  ] 
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL || 'https://seu-site.vercel.app'] 
+    : 'http://localhost:3000'
 }))
 app.use(express.json())
 app.use("/api", router)
