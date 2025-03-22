@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://fotografa-brasileira-em-londres.vercel.app/",
     siteName: "Fotógrafa Brasileira em Londres",
-    images: [{ url: "/images/about-image-large.webp" }],
+    images: [{ url: "/images/hero-image-large.webp" }],
   }
 };
 
