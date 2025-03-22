@@ -27,13 +27,36 @@ async function sendEmail({ name, email, message, smtpConfig }: {
     subject: "New Contact Form Submission",
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
   });
+
+  const result = await transporter.sendMail({
+    from: `"${name}" <${smtpConfig.user}>`,
+    to: smtpConfig.user,
+    replyTo: email,
+    subject: "New Contact Form Submission",
+    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+  });
+  
+  return result;
 }
 
 // Handler para processar as requisições POST
 export async function POST(request: NextRequest) {
   try {
-    // Obter o corpo da requisição
-    const body = await request.json();
+    // log the raw request body
+    const rawBody = await request.text();
+    console.log('Raw request body:', rawBody);
+
+    // Parse do corpo da requisição
+    let body;
+    try {
+      body = JSON.parse(rawBody);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      return NextResponse.json(
+        { success: false, message: "Invalid JSON in request body" },
+        { status: 400 }
+      );
+    }
     
     // Get the language from the request body or default to "en"
     const lang = body.lang || 'en';
@@ -48,6 +71,8 @@ export async function POST(request: NextRequest) {
         field: err.path.join('.'),
         message: err.message,
       }));
+
+      console.log('Validation errors:', formattedErrors);
 
       return NextResponse.json(
         { success: false, message: translations.validationMessage, errors: formattedErrors },
@@ -64,31 +89,64 @@ export async function POST(request: NextRequest) {
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
 
-    if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
+    if (!smtpUser || !smtpPass) {
+      console.error('Missing SMTP credentials:', { smtpHost, smtpPort, smtpUser: !!smtpUser, smtpPass: !!smtpPass });
       return NextResponse.json(
-        { success: false, message: "Missing required SMTP environment variables." },
+        { success: false, message: "Missing required SMTP credentials." },
         { status: 500 }
       );
     }
 
-    // Send an email using the transporter
-    await sendEmail({
-      name,
-      email,
-      message,
-      smtpConfig: { host: smtpHost, port: smtpPort, user: smtpUser, pass: smtpPass },
+    console.log('Attempting to send email with config:', { 
+      smtpHost, 
+      smtpPort, 
+      smtpUser: smtpUser?.substring(0, 3) + '***', 
+      hasPass: !!smtpPass 
     });
+
+    // Send an email using the transporter
+    try {
+      const emailResult = await sendEmail({
+        name,
+        email,
+        message,
+        smtpConfig: { host: smtpHost, port: smtpPort, user: smtpUser, pass: smtpPass },
+      });
+
+      console.log('Email sent successfully:', emailResult.messageId);
 
     // Respond with a success message if the email is sent successfully
     return NextResponse.json(
       { success: true, message: translations.validationMessage }, 
       { status: 200 }
     );
-  } catch (error) {
-    console.error('Error processing contact form:', error);
+  } catch (emailError) {
+    console.error('Error sending email:', emailError);
     return NextResponse.json(
-      { success: false, message: error instanceof Error ? error.message : "An unexpected error occurred." }, 
+      { 
+        success: false, 
+        message: "Failed to send email", 
+        error: emailError instanceof Error ? emailError.message : "Unknown email error" 
+      },
       { status: 500 }
     );
   }
+  } catch (error) {
+    console.error('Error processing contact form:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        message: error instanceof Error ? error.message : "An unexpected error occurred.", 
+        error: error instanceof Error ? error.message : "Unknown error"
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  return NextResponse.json(
+    { success: false, message: "This endpoint only accepts POST requests" },
+    { status: 405 }
+  );
 }
