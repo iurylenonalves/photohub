@@ -14,7 +14,7 @@ const Contact = () => {
   const contactSchema = ContactSchema(locale as 'en' | 'pt');
 
   const [status, setStatus] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', lang: locale });
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -46,14 +46,15 @@ const Contact = () => {
 
     if (!validateForm()) return;
 
+    const dataToSend = { ...formData, lang: locale };
+
     setStatus('loading');
 
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api';
-      const response = await fetch(`${apiUrl}/contacts`, {
+    try {      
+      const response = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       const result = await response.json();
