@@ -1,8 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from '@/context/TranslationContext';
+import ContactForm from './ContactForm';
+import { z } from 'zod'
+import { ContactSchema } from '@/schemas/ContactSchema';
+
 
 const Contact = () => {
   const { translations, locale } = useTranslations();
@@ -102,6 +107,14 @@ const Contact = () => {
                   <MessageCircle size={20} />
                   {translations.whatsappButton}
                 </a>
+
+                <ContactForm
+                formData={formData}
+                handleSubmit={handleSubmit}
+                status={status}
+                handleChange={handleChange}
+                errors={errors}
+              />
               </div>
             </div>
           </div>
