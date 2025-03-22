@@ -71,13 +71,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
-      return NextResponse.json(
-        { success: false, message: "Missing required SMTP environment variables." },
-        { status: 500 }
-      );
-    }
-
+    // Send an email using the transporter
     await sendEmail({
       name,
       email,
