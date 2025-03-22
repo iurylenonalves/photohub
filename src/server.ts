@@ -10,9 +10,7 @@ dotenv.config()
 const app = express()
 
 app.use(cors({ 
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://photohub-landingpage-brunaalves.vercel.app/'] 
-    : 'http://localhost:3000'
+  origin: ['https://seudominio.com', 'http://localhost:3000']
 }))
 app.use(express.json())
 app.use("/api", router)
@@ -20,3 +18,4 @@ app.use(errorHandlerMiddleware)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
+
