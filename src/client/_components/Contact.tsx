@@ -1,71 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useTranslations } from '@/context/TranslationContext';
 import ContactForm from './ContactForm';
-import { z } from 'zod'
-import { ContactSchema } from '@/schemas/ContactSchema';
+import { useContactForm } from '@/hooks/useContactForm';
 
 
 const Contact = () => {
   const { translations, locale } = useTranslations();
-  const contactSchema = ContactSchema(locale as 'en' | 'pt');
-
-  const [status, setStatus] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', lang: locale });
-  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
-  };
-
-  const validateForm = () => {
-    try {
-      contactSchema.parse(formData);
-      setErrors({});
-      return true;
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const formattedErrors: { [key: string]: string } = {};
-        error.errors.forEach((err) => {
-          if (err.path) {
-            formattedErrors[err.path[0]] = err.message;
-          }
-        });
-        setErrors(formattedErrors);
-      }
-      return false;
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    const dataToSend = { ...formData, lang: locale };
-
-    setStatus('loading');
-
-    try {      
-      const response = await fetch('/api/contacts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
-      });
-
-      const result = await response.json();
-      console.log('Response:', response);
-      console.log('Result:', result);
-      setStatus(result.success ? 'success' : 'error');
-    } catch (error) {
-      console.error('Error:', error);
-      setStatus('error');
-    }
-  };
+  const { formData, errors, status, handleChange, handleSubmit } = useContactForm(locale, translations);
 
   return (
       <section className="py-16 px-6 bg-gray-50 scrool-mt-16" id="contact">
