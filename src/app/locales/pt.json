@@ -61,6 +61,10 @@
   "emailInvalid": "Email inválido",
   "messageMinLength": "Mensagem deve ter no mínimo 10 caracteres",
   "validationSubjectForm": "Nova mensagem do formulário de contato",
+  "errorMessage": "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.",
+  "networkError": "Erro de rede. Por favor, verifique sua conexão e tente novamente.",
+  "loadingMessage": "Enviando sua mensagem...",
+  "successMessage": "Sua mensagem foi enviada com sucesso!",
 
 
   "footerAbout": "Sobre",

@@ -61,6 +61,10 @@
   "emailInvalid": "Invalid email",
   "messageMinLength": "Message must have at least 10 characters",
   "validationSubjectForm": "New message from contact form",
+  "errorMessage": "An error occurred while sending your message. Please try again later.",
+  "networkError": "Network error. Please check your connection and try again.",
+  "loadingMessage": "Sending your message...",
+  "successMessage": "Your message has been sent successfully!",
 
 
   "footerAbout": "About",
