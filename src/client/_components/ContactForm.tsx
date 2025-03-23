@@ -13,10 +13,29 @@ interface ContactFormProps {
 }
 
 
-
-
 const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: ContactFormProps) => {
   const { translations } = useTranslations();
+
+  const renderStatusMessage = () => {
+    if (status === 'success') {
+      return (
+        <p className="text-green-600 mt-2 animate-fadeIn" aria-live="polite">
+          {translations.contactSuccess}
+        </p>
+      );
+    }
+    if (status === 'error') {
+      return (
+        <p className="text-red-600 mt-2 animate-fadeIn" aria-live="polite">
+          {translations.contactError}
+        </p>
+      );
+    }
+    return null;
+  };
+
+  const inputClass = (hasError: boolean) =>
+    `w-full p-3 border rounded-lg ${hasError ? 'border-red-500' : ''}`;
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -24,64 +43,63 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
         <input
         type="text"
         name="name"
-        placeholder={translations.namePlaceholder}
+        placeholder={translations.namePlaceholder || 'Enter your name'}
         value={formData.name}
         onChange={handleChange}
-        aria-label={translations.nameLabel}
-        className={`w-full p-3 border rounded-lg ${errors.name ? 'border-red-500' : ''}`}
+        aria-label={translations.nameLabel || 'Name'}
+        aria-invalid={!!errors.name}
+        className={inputClass(!!errors.name)}
       />
-       {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+       {errors.name && (
+        <p className="text-red-500 text-sm mt-1 animate-fadeIn">
+          {errors.name}
+        </p>
+       )}
       </div>
 
       <div>
       <input
         type="email"
         name="email"
-        placeholder={translations.emailPlaceholder}
+        placeholder={translations.emailPlaceholder || 'Enter your email'}
         value={formData.email}
         onChange={handleChange}
-        aria-label={translations.emailLabel}    
-        className={`w-full p-3 border rounded-lg ${errors.email ? 'border-red-500' : ''}`}
+        aria-label={translations.emailLabel || 'Email'}
+        aria-invalid={!!errors.email}  
+        className={inputClass(!!errors.email)}
       />
-       {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+       {errors.email && (
+        <p className="text-red-500 text-sm mt-1 animate-fadeIn">
+          {errors.email}
+        </p>
+       )}
       </div>
     
       <div>
       <textarea
         id="message"
         name="message"
-        placeholder={translations.messagePlaceholder}
+        placeholder={translations.messagePlaceholder || 'Enter your message'}
         value={formData.message}
         onChange={handleChange}
-        aria-label={translations.messageLabel}    
-        className={`w-full p-3 border rounded-lg ${errors.message ? 'border-red-500' : ''}`}
+        aria-label={translations.messageLabel || 'Message'}
+        aria-invalid={!!errors.message} 
+        className={inputClass(!!errors.message)}
       />
-       {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+       {errors.message && (
+        <p className="text-red-500 text-sm mt-1 animate-fadeIn">
+          {errors.message}
+        </p>
+       )}
       </div>
 
-      {status === 'loading' ? (
-        <button
-          type="button"
-          className="w-full py-3 bg-gray-400 text-white font-semibold rounded-lg cursor-not-allowed"
-          disabled
-        >
-          {translations.sendingMessageButton}
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className="w-full py-3 bg-gray-500 text-white font-semibold cursor-pointer rounded-lg hover:bg-gray-600 transition"
-        >
-          {translations.sendMessageButton}
-        </button>
-      )}
-
-      {status === 'success' && (
-        <p className="text-green-600 mt-2 animate-fadeIn" aria-live="polite">{translations.contactSuccess}</p>
-      )}
-      {status === 'error' && (
-        <p className="text-red-600 mt-2 animate-fadeIn" aria-live="polite">{translations.contactError}</p>
-      )}
+      <button
+        type="submit"
+        className="w-full py-3 bg-gray-500 text-white font-semibold cursor-pointer rounded-lg hover:bg-gray-600 transition"
+      >
+        {translations.sendMessageButton}
+      </button>
+      {renderStatusMessage()}
     </form>
   );
 };
