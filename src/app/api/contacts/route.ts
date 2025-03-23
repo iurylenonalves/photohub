@@ -2,14 +2,69 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from "nodemailer";
 import { ContactSchema } from "@/schemas/ContactSchema";
 import { getTranslation } from "@/lib/translations/getTranslations";
-//import { HttpError } from "@/lib/errors/HttpError";
 
-async function sendEmail({ name, email, message, smtpConfig }: {
+// Define the shape of the request body
+interface ContactRequestBody {
   name: string;
   email: string;
   message: string;
-  smtpConfig: { host: string; port: number; user: string; pass: string };
-}) {
+  lang?: string;
+}
+
+// Define the shape of the SMTP configuration
+interface SMTPConfig {
+  host: string;
+  port: number;
+  user: string;
+  pass: string;
+}
+
+// Validate SMTP configuration and return the the credentials
+function validateSMTPConfig(): SMTPConfig {
+  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
+  const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+
+  if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
+    throw new Error("Missing required SMTP credentials.");
+  }
+
+  return { host: smtpHost, port: smtpPort, user: smtpUser, pass: smtpPass };
+}
+
+// Validate the language and ensure it's supported
+function validateLanguage(lang: string): "en" | "pt" {
+  const supportedLanguages = ['en', 'pt'] as const;
+  const defaultLanguage = "en";
+
+  if (!lang) return defaultLanguage;
+  if (!supportedLanguages.includes(lang as typeof supportedLanguages[number])) {
+    throw new Error("Unsupported language.");
+  }
+  return lang as typeof supportedLanguages[number];
+}
+
+// Handle error responses and return a formatted error message
+function handleErrorResponse(error: unknown, defaultMessage: string) {
+  return {
+    success: false,
+    message: error instanceof Error ? error.message : defaultMessage,
+    error: process.env.NODE_ENV === 'development' ? error : undefined,
+  };
+}
+
+function createResponse(success: boolean, message: string, status: number, data?: object) {
+  return NextResponse.json({ success, message, ...data }, { status });
+}
+
+// Send an email using the provided SMTP configuration
+async function sendEmailWithTimeout({ name, email, message, smtpConfig }: {
+  name: string;
+  email: string;
+  message: string;
+  smtpConfig: SMTPConfig;
+}, timeout = 10000) {
   const transporter = nodemailer.createTransport({
     host: smtpConfig.host,
     port: smtpConfig.port,
@@ -20,133 +75,62 @@ async function sendEmail({ name, email, message, smtpConfig }: {
     },
   });
 
-  await transporter.sendMail({
-    from: `"${name}" <${smtpConfig.user}>`,
-    to: smtpConfig.user,
-    replyTo: email,
-    subject: "New Contact Form Submission",
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-  });
-
-  const result = await transporter.sendMail({
-    from: `"${name}" <${smtpConfig.user}>`,
-    to: smtpConfig.user,
-    replyTo: email,
-    subject: "New Contact Form Submission",
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-  });
-  
-  return result;
+  // Wrap the email sending in a timeout
+  return Promise.race([
+    transporter.sendMail({
+      from: `"${name}" <${smtpConfig.user}>`,
+      to: smtpConfig.user,
+      replyTo: email,
+      subject: "New Contact Form Submission",
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `,
+    }),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Email sending timed out")), timeout)
+    ),
+  ]);
 }
 
-// Handler para processar as requisições POST
+// Handle POST requests to process the contact form submission
 export async function POST(request: NextRequest) {
   try {
-    // log the raw request body
-    const rawBody = await request.text();
-    console.log('Raw request body:', rawBody);
-
-    // Parse do corpo da requisição
-    let body;
-    try {
-      body = JSON.parse(rawBody);
-    } catch (parseError) {
-      console.error('JSON parse error:', parseError);
-      return NextResponse.json(
-        { success: false, message: "Invalid JSON in request body" },
-        { status: 400 }
-      );
-    }
-    
-    // Get the language from the request body or default to "en"
-    const lang = body.lang || 'en';
+    const body: ContactRequestBody = JSON.parse(await request.text());
+    const lang = validateLanguage(body.lang || 'en');
     const translations = getTranslation(lang);
-    
-    // Validate the request body using the ContactSchema
-    const parsedData = ContactSchema(lang).safeParse(body);           
 
-    // Check for missing required fields and throw a 400 Bad Request error if any are missing
+    // Validate the request body using the ContactSchema
+    const parsedData = ContactSchema(lang).safeParse(body);
     if (!parsedData.success) {
       const formattedErrors = parsedData.error.errors.map(err => ({
         field: err.path.join('.'),
         message: err.message,
       }));
 
-      console.log('Validation errors:', formattedErrors);
-
-      return NextResponse.json(
-        { success: false, message: translations.validationMessage, errors: formattedErrors },
-        { status: 400 }
-      );
+      // Return a validation error response
+      return createResponse(false, translations.validationMessage, 400, { errors: formattedErrors });
     }
 
-    // Extract name, email, and message from the request body
+    // Extract validated data from the parsed request body
     const { name, email, message } = parsedData.data;
+    const smtpConfig = validateSMTPConfig();
 
-    // Check if required environment variables are defined
-    const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-    const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+    // Send the email using the provided SMTP configuration
+    await sendEmailWithTimeout({ name, email, message, smtpConfig });
 
-    if (!smtpUser || !smtpPass) {
-      console.error('Missing SMTP credentials:', { smtpHost, smtpPort, smtpUser: !!smtpUser, smtpPass: !!smtpPass });
-      return NextResponse.json(
-        { success: false, message: "Missing required SMTP credentials." },
-        { status: 500 }
-      );
-    }
-
-    console.log('Attempting to send email with config:', { 
-      smtpHost, 
-      smtpPort, 
-      smtpUser: smtpUser?.substring(0, 3) + '***', 
-      hasPass: !!smtpPass 
-    });
-
-    // Send an email using the transporter
-    try {
-      const emailResult = await sendEmail({
-        name,
-        email,
-        message,
-        smtpConfig: { host: smtpHost, port: smtpPort, user: smtpUser, pass: smtpPass },
-      });
-
-      console.log('Email sent successfully:', emailResult.messageId);
-
-    // Respond with a success message if the email is sent successfully
-    return NextResponse.json(
-      { success: true, message: translations.validationMessage }, 
-      { status: 200 }
-    );
-  } catch (emailError) {
-    console.error('Error sending email:', emailError);
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: "Failed to send email", 
-        error: emailError instanceof Error ? emailError.message : "Unknown email error" 
-      },
-      { status: 500 }
-    );
-  }
+    // Return a success message
+    return createResponse(true, translations.validationMessage || "Email sent successfully.", 200);
   } catch (error) {
-    console.error('Error processing contact form:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: error instanceof Error ? error.message : "An unexpected error occurred.", 
-        error: error instanceof Error ? error.message : "Unknown error"
-      },
-      { status: 500 }
-    );
+    // Handle unexpected errors
+    return createResponse(false, "An unexpected error occurred.", 500, handleErrorResponse(error, "An unexpected error occurred."));
   }
 }
 
+// Handle GET requests and return a 405 Method Not Allowed response
 export async function GET() {
-  return NextResponse.json(
-    { success: false, message: "This endpoint only accepts POST requests" },
-    { status: 405 }
-  );
+  return createResponse(false, "This endpoint only accepts POST requests", 405);
 }
