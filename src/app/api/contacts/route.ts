@@ -4,6 +4,13 @@ import { ContactSchema } from "@/schemas/ContactSchema";
 import { sendEmailWithTimeout } from "@/utils/email";
 import { createResponse, handleErrorResponse } from '@/utils/response';
 import { getTranslation } from "@/lib/translations/getTranslations";
+import { RateLimiterMemory } from 'rate-limiter-flexible';
+
+// Define the rate limiter configuration
+const rateLimiter = new RateLimiterMemory({
+  points: 5, // 5 requests
+  duration: 60, // per minute
+});
 
 // Define the shape of the request body
 interface ContactRequestBody {
@@ -28,6 +35,10 @@ function validateLanguage(lang: string): "en" | "pt" {
 // Handle POST requests to process the contact form submission
 export async function POST(request: NextRequest) {
   try {
+    // Get the client's IP address from the request headers
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    await rateLimiter.consume(ip);
+
     const body: ContactRequestBody = JSON.parse(await request.text());
     const lang = validateLanguage(body.lang || 'en');
     const translations = getTranslation(lang);
@@ -54,6 +65,10 @@ export async function POST(request: NextRequest) {
     // Return a success message
     return createResponse(true, translations.validationMessage || "Email sent successfully.", 200);
   } catch (error) {
+    if (error && error.constructor && error.constructor.name === 'RateLimiterRes') {
+      console.log("Rate limiter triggered: Too many requests.");
+      return createResponse(false, "Too many requests. Please try again later.", 429);
+    }
     // Handle unexpected errors
     return createResponse(false, "An unexpected error occurred.", 500, handleErrorResponse(error, "An unexpected error occurred."));
   }
