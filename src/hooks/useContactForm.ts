@@ -12,6 +12,8 @@ interface Translations {
   sendMessageButton: string;
   errorMessage: string;
   networkError: string;
+  tooManyRequests: string;
+  loading: string;
 }
 
 export const useContactForm = (locale: string, translations: Translations) => {
@@ -51,7 +53,7 @@ export const useContactForm = (locale: string, translations: Translations) => {
 
     const dataToSend = { ...formData, lang: locale };
 
-    setStatus('loading');
+    setStatus(translations.loading || 'loading');
 
     try {
       const response = await fetch('/api/contacts', {
@@ -61,15 +63,20 @@ export const useContactForm = (locale: string, translations: Translations) => {
       });
 
       const result = await response.json();
-
-      if (response.ok && result.success) {
+      
+      if (response.ok) {
         setStatus('success');
+        setFormData({ name: '', email: '', message: '', lang: locale });
+      } else if (response.status === 429) {       
+        setStatus('too-many-requests');
       } else {
         setStatus(result.message || translations.errorMessage || 'An error occurred.');
       }
-    } catch {
+    } catch (error) {
+      console.error('Fetch error:', error);
       setStatus(translations.networkError || 'Network error. Please try again later.');
     }
+    
   };
 
   return { formData, errors, status, handleChange, handleSubmit };

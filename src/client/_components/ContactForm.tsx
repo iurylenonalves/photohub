@@ -4,8 +4,7 @@ import { useTranslations } from "@/context/TranslationContext";
 
 
 interface ContactFormProps {
-  formData: { name: string; email: string; message: string };
-  // setFormData: React.Dispatch<React.SetStateAction<{ name: string; email: string; message: string }>>;
+  formData: { name: string; email: string; message: string };  
   handleSubmit: (e: React.FormEvent) => void;
   status: string | null;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -16,6 +15,7 @@ interface ContactFormProps {
 const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: ContactFormProps) => {
   const { translations } = useTranslations();
 
+  console.log(status)
   const renderStatusMessage = () => {
     if (status === 'success') {
       return (
@@ -24,10 +24,27 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
         </p>
       );
     }
+
+    if (status === 'too-many-requests') {
+      return(
+      <p className="text-orange-600 mt-2 animate-fadeIn" aria-live="polite">
+        {translations.tooManyRequests || 'Too many requests. Please try again later.'}
+      </p>
+      );
+    }
+
     if (status === 'error') {
       return (
         <p className="text-red-600 mt-2 animate-fadeIn" aria-live="polite">
           {translations.contactError}
+        </p>
+      );
+    }   
+
+    if (status === translations.loading || status === 'loading') {
+      return(
+        <p className="text-blue-600 mt-2 animate-fadeIn" aria-live="polite">
+          {translations.loading || 'Sending...'}
         </p>
       );
     }
@@ -96,8 +113,9 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
       <button
         type="submit"
         className="w-full py-3 bg-gray-500 text-white font-semibold cursor-pointer rounded-lg hover:bg-gray-600 transition"
+        disabled={status === 'loading'}
       >
-        {translations.sendMessageButton}
+        {status === 'loading' ? (translations.loading || 'Sending...') : translations.sendMessageButton}
       </button>
       {renderStatusMessage()}
     </form>
