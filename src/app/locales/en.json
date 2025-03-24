@@ -65,6 +65,8 @@
   "networkError": "Network error. Please check your connection and try again.",
   "loadingMessage": "Sending your message...",
   "successMessage": "Your message has been sent successfully!",
+  "tooManyRequests": "Too many requests. Please try again later.",
+  "loading": "Sending...",
 
 
   "footerAbout": "About",

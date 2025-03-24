@@ -65,6 +65,8 @@
   "networkError": "Erro de rede. Por favor, verifique sua conexão e tente novamente.",
   "loadingMessage": "Enviando sua mensagem...",
   "successMessage": "Sua mensagem foi enviada com sucesso!",
+  "tooManyRequests": "Muitas solicitações. Por favor, tente novamente mais tarde.",
+  "loading": "Enviando...",
 
 
   "footerAbout": "Sobre",
