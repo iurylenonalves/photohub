@@ -25,11 +25,19 @@ const Header = () => {
         {/* Logo */}
         <Link href="/" className={styles.logoImg}>
         <Image 
-          src="/images/logo-brunaalvesphoto-thumbnail.webp" 
+          src="/images/bruna-logo-white.svg" 
           alt="Logo" 
           width={150} 
           height={75} 
           priority={true}
+        />
+        <Image
+          src="/images/bruna-logo-dark.svg"
+          alt="Logo Dark"
+          width={150}
+          height={75}
+          priority={true}
+          className={styles.logoImgDark}
         />
         </Link>
 

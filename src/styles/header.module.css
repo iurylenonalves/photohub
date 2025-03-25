@@ -31,6 +31,10 @@
   height: 75px; 
 }
 
+.logoImgDark {
+  display: none;
+}
+
 /* Menu */
 .nav {
   display: flex;
@@ -155,5 +159,17 @@
   .mobileLanguage {
     transform: scale(0.85);
     margin-right: 4px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logoImg {
+    display: none;
+  }
+
+  .logoImgDark {
+    display: block;
+    width: 150px;
+    height: 75px;
   }
 }
