@@ -32,7 +32,7 @@ const Header = () => {
           priority={true}
         />
         <Image
-          src="/images/bruna-logo-dark.svg"
+          src="/images/bruna-logo-black.svg"
           alt="Logo Dark"
           width={150}
           height={75}
