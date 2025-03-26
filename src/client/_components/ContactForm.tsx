@@ -2,7 +2,6 @@
 
 import { useTranslations } from "@/context/TranslationContext";
 
-
 interface ContactFormProps {
   formData: { name: string; email: string; message: string };  
   handleSubmit: (e: React.FormEvent) => void;
@@ -11,11 +10,9 @@ interface ContactFormProps {
   errors: { name?: string; email?: string; message?: string };
 }
 
-
 const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: ContactFormProps) => {
   const { translations } = useTranslations();
-
-  console.log(status)
+  
   const renderStatusMessage = () => {
     if (status === 'success') {
       return (
@@ -66,6 +63,7 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
         aria-label={translations.nameLabel || 'Name'}
         aria-invalid={!!errors.name}
         className={inputClass(!!errors.name)}
+        autoComplete="name"
       />
        {errors.name && (
         <p className="text-red-500 text-sm mt-1 animate-fadeIn">
@@ -84,6 +82,7 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
         aria-label={translations.emailLabel || 'Email'}
         aria-invalid={!!errors.email}  
         className={inputClass(!!errors.email)}
+        autoComplete="email"
       />
        {errors.email && (
         <p className="text-red-500 text-sm mt-1 animate-fadeIn">
@@ -102,6 +101,7 @@ const ContactForm = ({ formData, handleSubmit, status, handleChange, errors }: C
         aria-label={translations.messageLabel || 'Message'}
         aria-invalid={!!errors.message} 
         className={inputClass(!!errors.message)}
+        autoComplete="off"
       />
        {errors.message && (
         <p className="text-red-500 text-sm mt-1 animate-fadeIn">
