@@ -22,6 +22,7 @@ const raleway = Raleway({
 export const metadata: Metadata = {
   title: "Fotógrafa Brasileira em Londres",
   description: "Quer transformar seus momentos em registros inesquecíveis? Seja para sua viagem, sua marca ou um retrato especial, estou aqui para capturar sua essência em cada clique.",
+  metadataBase: new URL("https://fotografa-brasileira-em-londres.vercel.app/"),
   openGraph: {
     title: "Fotógrafa Brasileira em Londres",
     description: "Quer transformar seus momentos em registros inesquecíveis? Seja para sua viagem, sua marca ou um retrato especial, estou aqui para capturar sua essência em cada clique.",
