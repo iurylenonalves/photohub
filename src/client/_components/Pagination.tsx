@@ -24,7 +24,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
 
   return (
     <div className="flex justify-center mt-8 space-x-2">
-      {/* Botão "Anterior" */}
+      {/* "Previous" button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -34,7 +34,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
         ← {translations.paginationPrevious || "Anterior"}
       </button>
 
-      {/* Renderiza os números de página - ocultando em telas pequenas */}
+      {/* Render page numbers - hiding on small screens */}
       <div className="hidden md:flex space-x-2">
         {Array.from({ length: totalPages }, (_, index) => {
           const pageNumber = index + 1;
@@ -50,7 +50,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }: Pag
         })}
       </div>
 
-      {/* Botão "Próximo" */}
+      {/* "Next" button */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
