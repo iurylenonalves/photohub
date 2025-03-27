@@ -46,8 +46,8 @@ export default function RootLayout({
       >
         <TranslationProvider>
           {children}
-        </TranslationProvider>
         <AosInit/>
+        </TranslationProvider>
       </body>
     </html>
   );
